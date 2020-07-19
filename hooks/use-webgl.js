@@ -14,48 +14,53 @@ class WebGL {
 
     // scene
     this.scene = new THREE.Scene()
-    this.DOMScene = new THREE.Group()
-    this.scene.add(this.DOMScene)
 
-    // camera
+    // this.scene.background = new THREE.Color(0xffffff)
+
+    // this.camera = new THREE.PerspectiveCamera(
+    //   40,
+    //   viewport.width / viewport.height,
+    //   0.1,
+    //   100000
+    // )
+
+    // this.camera.position.z = 8
+
     this.camera = new THREE.OrthographicCamera(
       viewport.width / -2,
       viewport.width / 2,
       viewport.height / 2,
       viewport.height / -2,
-      -10000,
-      10000
+      0.001,
+      100000
     )
 
-    this.camera.position.set(0, 0, 500)
-
-    // camera controls
-    // const {
-    //   OrbitControls
-    // } = require('three/examples/jsm/controls/OrbitControls.js')
-    // this.cameraControls = new OrbitControls(
-    //   this.camera,
-    //   document.getElementById('__nuxt')
-    // )
+    this.camera.position.z = 1000
 
     // canvas
     this.canvas = document.createElement('canvas')
 
     // WEBGL2
-    const { WEBGL } = require('three/examples/jsm/WebGL')
-    const context = this.canvas.getContext(
-      WEBGL.isWebGL2Available() ? 'webgl2' : 'webgl',
-      { alpha: false }
-    )
+    // const { WEBGL } = require('three/examples/jsm/WebGL')
+    // const context = this.canvas.getContext(
+    //   WEBGL.isWebGL2Available() ? 'webgl2' : 'webgl',
+    //   { alpha: false }
+    // )
 
     // renderer
     this.renderer = new THREE.WebGLRenderer({
+      powerPreference: 'high-performance',
+      antialias: false,
+      stencil: false,
+      depth: false,
       canvas: this.canvas,
-      context,
+      // context,
       scene: this.scene
     })
     this.renderer.setSize(viewport.width, viewport.height)
     this.renderer.setPixelRatio(window.devicePixelRatio || 1)
+
+    // console.log(this.renderer.autoClear)
 
     // composer
     const Composer = require('@/webgl/composer').default
@@ -64,6 +69,7 @@ class WebGL {
       renderer: this.renderer,
       scene: this.scene
     })
+    // this.composer.enabled = false
 
     // stats
     this.stats = new Stats()
@@ -83,6 +89,8 @@ class WebGL {
   }
 
   loop(clock) {
+    this.renderer.setSize(viewport.width, viewport.height)
+    this.renderer.setPixelRatio(window.devicePixelRatio || 1)
     this.composer.render(clock)
     this.renderer.renderLists.dispose()
   }
@@ -103,10 +111,15 @@ class WebGL {
   }
 
   onWindowResize() {
-    this.camera.left = viewport.width / -2
-    this.camera.right = viewport.width / 2
-    this.camera.top = viewport.height / 2
-    this.camera.bottom = viewport.height / -2
+    if (this.camera.type === 'PerspectiveCamera') {
+      this.camera.aspect = viewport.width / viewport.height
+    } else if (this.camera.type === 'OrthographicCamera') {
+      this.camera.left = viewport.width / -2
+      this.camera.right = viewport.width / 2
+      this.camera.top = viewport.height / 2
+      this.camera.bottom = viewport.height / -2
+    }
+
     this.camera.updateProjectionMatrix()
   }
 

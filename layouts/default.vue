@@ -1,18 +1,16 @@
 <template>
   <div>
-    <app-noise id="appNoise" />
-    <app-scrollbar id="appScrollbar" />
+    <shell-noise class="shellNoise" />
     <nuxt />
-    <webgl-scene />
+    <webgl-scene class="shellScene" />
   </div>
 </template>
 
 <script>
 export default {
-  components: {
-    WebglScene: () => import('@/components/webgl/webgl-scene'),
-    AppScrollbar: () => import('@/components/shell/app-scrollbar'),
-    AppNoise: () => import('@/components/shell/app-noise')
+  beforeDestroy() {
+    const GUI = useGUI()
+    GUI.destroy()
   }
 }
 </script>
@@ -23,7 +21,16 @@ export default {
   overflow-y: auto;
 }
 
-#appNoise {
+.shellScene {
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.shellNoise {
   height: calc(var(--vh, 1vh) * 100);
   left: 0;
   pointer-events: none;
@@ -31,12 +38,5 @@ export default {
   top: 0;
   width: 100vw;
   z-index: 10;
-}
-
-#appScrollbar {
-  height: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
 }
 </style>

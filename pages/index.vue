@@ -1,51 +1,44 @@
 <template>
-  <div class="appIndex">
-    <scroller
-      ref="scroller"
-      @scroll="onScroll"
-      :draggable="true"
-      :native="$viewport.width <= 769"
-    >
-      <app-title />
-      <images-grid ref="image-grid" class="appIndex__imagesGrid" />
-    </scroller>
-  </div>
+  <div class="pageIndex"></div>
 </template>
 
 <script>
 import useWebGL from '@/hooks/use-webgl'
+// import useRAF from '@/hooks/use-raf'
 
-import AppTitle from '@/components/blocks/app-title'
-import ImagesGrid from '@/components/blocks/images-grid'
+import Grid from '@/webgl/components/grid'
 
 export default {
-  components: {
-    AppTitle,
-    ImagesGrid
-  },
-
   mounted() {
-    const { composer } = useWebGL()
-    const { barrelEffect } = composer
+    const { scene, camera } = useWebGL()
 
-    barrelEffect.uniforms.get('intensity').value = -0.1
+    this.grid = new Grid()
+    camera.add(this.grid)
+    scene.add(camera)
+
+    // camera controls
+    const {
+      OrbitControls
+    } = require('three/examples/jsm/controls/OrbitControls.js')
+    this.cameraControls = new OrbitControls(
+      camera,
+      document.getElementById('__nuxt')
+    )
   },
 
-  methods: {
-    onScroll({ position, progress, velocity }) {
-      this.$store.commit('scroll/setPosition', position)
-      this.$store.commit('scroll/setProgress', progress)
-      this.$store.commit('scroll/setVelocity', velocity)
-    }
+  methods: {},
+
+  beforeDestroy() {
+    const { scene } = useWebGL()
+
+    scene.remove(this.grid)
   }
 }
 </script>
 
 <style lang="scss">
-.appIndex {
-  @include media('>m') {
-    cursor: grab;
-    height: 100vh;
-  }
+.pageIndex {
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 }
 </style>

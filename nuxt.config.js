@@ -88,8 +88,33 @@ export default {
     { src: '~/plugins/viewport.js', mode: 'client' },
     { src: '~/plugins/scroll.js', mode: 'client' },
     { src: '~/plugins/mouse.js', mode: 'client' },
-    { src: '~/plugins/directives.js', mode: 'client' },
-    { src: '~/plugins/components.js' }
+    { src: '~/plugins/directives.js', mode: 'client' }
+  ],
+  components: [
+    {
+      path: '@/components',
+      extensions: ['vue']
+    },
+    {
+      path: '@/components/shell',
+      prefix: 'shell',
+      extensions: ['vue']
+    },
+    {
+      path: '@/components/blocks',
+      prefix: 'block',
+      extensions: ['vue']
+    },
+    {
+      path: '@/components/elements',
+      prefix: 'el',
+      extensions: ['vue']
+    },
+    {
+      path: '@/components/webgl',
+      prefix: 'webgl',
+      extensions: ['vue']
+    }
   ],
   buildModules: [
     '@nuxtjs/eslint-module',
