@@ -89,7 +89,7 @@ export default class Composer {
     this.composer.addPass(new RenderPass(this.scene, this.camera))
 
     this.composer.addPass(this.bloomPass)
-    // this.composer.addPass(this.glitchPass)
+    this.composer.addPass(this.glitchPass)
     this.composer.addPass(this.flowmapPass)
   }
 
@@ -159,7 +159,7 @@ export default class Composer {
       .add(this.fluidSimulation, 'densityDissipation')
       .min(0)
       .max(1)
-      .step(0.01)
+      .step(0.001)
     menu
       .add(this.fluidSimulation, 'velocityDissipation')
       .min(0)

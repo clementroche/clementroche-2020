@@ -5,11 +5,12 @@ uniform vec2 uRatio;
 uniform vec3 uColor;
 uniform float uSegments;
 uniform vec2 uCursor;
+uniform vec2 uOffset;
 
 void main() {
   // Pick a coordinate to visualize in a grid
   vec2 coord = vPosition.xy * uSegments;
-    coord = coord * uRatio;
+  coord = coord * uRatio;
   // Compute anti-aliased world-space grid lines
   vec2 grid = abs(fract(coord - 0.5) - 0.5) / fwidth(coord);
   float line = min(grid.x, grid.y);

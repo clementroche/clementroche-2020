@@ -15,6 +15,7 @@ export default class Grid extends THREE.Object3D {
     this.geometry = new THREE.PlaneBufferGeometry(1, 1)
     this.uniforms = {
       uColor: { value: new THREE.Color(color) },
+      uOffset: { value: new THREE.Vector2() },
       uRatio: {
         value: new THREE.Vector2()
       },
@@ -52,9 +53,16 @@ export default class Grid extends THREE.Object3D {
 
     gsap.to(this.uniforms.uCursor.value, {
       duration: 3,
-      ease: 'power4.out',
+      ease: 'expo.out',
       x: x * 0.5 + 0.5,
       y: y * 0.5 + 0.5
+    })
+
+    gsap.to(this.uniforms.uOffset.value, {
+      duration: 3,
+      ease: 'expo.out',
+      x: -x * 0.5 + 0.5,
+      y: -y * 0.5 + 0.5
     })
   }
 
