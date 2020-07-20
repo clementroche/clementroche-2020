@@ -271,6 +271,29 @@ function createDoubleFBO(
   return fbo
 }
 
+// rgba = { format: THREE.RGBAFormat, internalFormat: 'RGBA16F' }
+// rg = { format: THREE.RGFormat, internalFormat: 'RG16F' }
+// r = { format: THREE.RedFormat, internalFormat: 'R16F' }
+
+function getTHREEFormat(format) {
+  switch (format) {
+    case 34842:
+      return 'RGBA16F'
+    case 33327:
+      return 'RG16F'
+    case 33325:
+      return 'R16F'
+    case 6408:
+      return THREE.RGBAFormat
+    case 33319:
+      return THREE.RGFormat
+    case 6403:
+      return THREE.RedFormat
+    default:
+      break
+  }
+}
+
 function supportRenderTextureFormat(gl, internalFormat, format, type) {
   let texture = gl.createTexture()
   gl.bindTexture(gl.TEXTURE_2D, texture)
@@ -291,7 +314,6 @@ function supportRenderTextureFormat(gl, internalFormat, format, type) {
   )
 
   let status = gl.checkFramebufferStatus(gl.FRAMEBUFFER)
-  console.log(status, gl.FRAMEBUFFER_COMPLETE, gl.FRAMEBUFFER)
   return status == gl.FRAMEBUFFER_COMPLETE
 }
 
@@ -309,8 +331,8 @@ function getSupportedFormat(gl, internalFormat, format, type) {
   }
 
   return {
-    internalFormat,
-    format
+    internalFormat: getTHREEFormat(internalFormat),
+    format: getTHREEFormat(format)
   }
 }
 
@@ -318,7 +340,7 @@ export default class FluidSimulation {
   constructor({ renderer, size = 128 } = {}) {
     this.renderer = renderer
     // Resolution of simulation
-    this.simRes = 128
+    this.simRes = size
     this.dyeRes = 512
 
     // Main inputs to control look and feel of fluid
@@ -335,19 +357,8 @@ export default class FluidSimulation {
     }
 
     const gl = this.renderer.getContext()
-    // console.log(gl)
 
     const isWebGL2 = this.renderer.capabilities.isWebGL2
-
-    // const supportLinearFiltering = this.renderer.extensions.get(
-    //   `OES_texture_${isWebGL2 ? `` : `half_`}float_linear`
-    // )
-
-    // const halfFloat = isWebGL2 ? THREE.FloatType : THREE.HalfFloatType
-    // const glHalfFloat =
-    //   halfFloat === THREE.FloatType
-    //     ? gl.HALF_FLOAT
-    //     : gl.getExtension('OES_texture_half_float').HALF_FLOAT_OES
 
     let halfFloat
     let supportLinearFiltering
@@ -374,24 +385,15 @@ export default class FluidSimulation {
       r = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType)
     }
 
-    // 6048 RGBA THREE.RGBAFormat
-    // 34842 RGBA16F 'RGBA16F'
-    // 33319 RG THREE.RGFormat
-    // 33327 RG16F 'RG16F'
-    // 6403 RED THREE.RedFormat
-    // 33325 R16F 'R16F'
-
-    // console.log(rgba, rg, r)
-
     const filtering = supportLinearFiltering
       ? THREE.LinearFilter
       : THREE.NearestFilter
 
     // let rgba, rg, r
 
-    rgba = { format: THREE.RGBAFormat, internalFormat: 'RGBA16F' }
-    rg = { format: THREE.RGFormat, internalFormat: 'RG16F' }
-    r = { format: THREE.RedFormat, internalFormat: 'R16F' }
+    // rgba = { format: THREE.RGBAFormat, internalFormat: 'RGBA16F' }
+    // rg = { format: THREE.RGFormat, internalFormat: 'RG16F' }
+    // r = { format: THREE.RedFormat, internalFormat: 'R16F' }
 
     halfFloat = isWebGL2 ? THREE.FloatType : THREE.HalfFloatType
 
@@ -427,7 +429,6 @@ export default class FluidSimulation {
       type: halfFloat,
       minFilter: THREE.NearestFilter,
       format: r.format,
-      // internalFormat: r.internalFormat,
       depthBuffer: false,
       stencilBuffer: false
     })
@@ -437,7 +438,6 @@ export default class FluidSimulation {
       type: halfFloat,
       minFilter: THREE.NearestFilter,
       format: r.format,
-      // internalFormat: r.internalFormat,
       depthBuffer: false,
       stencilBuffer: false
     })
@@ -570,10 +570,27 @@ export default class FluidSimulation {
 
     this.lastMouse = new THREE.Vector2()
 
+    window.addEventListener('touchstart', this.onMouseDown.bind(this), false)
+    window.addEventListener('mousedown', this.onMouseDown.bind(this), false)
+
+    window.addEventListener('touchstart', this.updateMouse.bind(this), false)
+    window.addEventListener('touchmove', this.updateMouse.bind(this), false)
     window.addEventListener('mousemove', this.updateMouse.bind(this), false)
+
+    window.addEventListener('touchend', this.onMouseUp.bind(this), false)
+    window.addEventListener('mouseup', this.onMouseUp.bind(this), false)
+  }
+
+  onMouseDown() {
+    this.mouseDown = true
+  }
+
+  onMouseUp() {
+    this.mouseDown = false
   }
 
   updateMouse(e) {
+    if (!this.mouseDown) return
     if (e.changedTouches && e.changedTouches.length) {
       e.x = e.changedTouches[0].pageX
       e.y = e.changedTouches[0].pageY

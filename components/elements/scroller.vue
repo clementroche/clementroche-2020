@@ -3,7 +3,7 @@
     <div
       ref="inner"
       :style="{
-        transform: `translate(${scrollPosition.x}px,${scrollPosition.y}px)`
+        transform: `translate3d(${scrollPosition.x}px,${scrollPosition.y}px,0)`
       }"
       class="scroller__inner"
     >

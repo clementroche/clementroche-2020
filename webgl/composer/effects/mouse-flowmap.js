@@ -15,6 +15,7 @@ const fragment = `
     vec2 vw = vUv - fluid.rg * 0.0002;
 
     outputColor = texture2D(inputBuffer, vw);
+    outputColor *= 0.5;
 
     // outputColor = texture2D(tFluid, vUv);
   }

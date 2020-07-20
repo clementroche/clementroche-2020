@@ -62,7 +62,7 @@ export default {
       },
       {
         rel: 'preload',
-        href: '/fonts/GothamUltra/GothamUltra.woff2',
+        href: '/fonts/PMGrotesk-Regular/PMGrotesk-Regular.woff2',
         as: 'font',
         type: 'font/woff2',
         crossorigin: 'anonymous'
@@ -84,6 +84,7 @@ export default {
     scss: ['@/assets/scss/config.scss', '@/assets/scss/modules/index.scss']
   },
   plugins: [
+    '~/plugins/composition-api',
     { src: '~/plugins/events.js', mode: 'client' },
     { src: '~/plugins/viewport.js', mode: 'client' },
     { src: '~/plugins/scroll.js', mode: 'client' },

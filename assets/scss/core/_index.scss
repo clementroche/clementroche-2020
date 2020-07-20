@@ -3,7 +3,7 @@
 @include font-faces();
 
 :root {
-  --font-gotham-ultra: '#{nth($font-faces, 1)}', serif;
+  --font-grotesk: '#{nth($font-faces, 1)}', serif;
   @include colors-properties();
   @include responsive-properties();
 }
@@ -23,12 +23,12 @@ body {
   position: relative;
 }
 
-// html,
-// body {
-// height: 100%;
-// overflow: hidden;
-// width: 100%;
-// }
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
 
 *,
 *::before,
@@ -66,5 +66,69 @@ button {
 
   &:active {
     border-style: unset;
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+.u-link-hover {
+  position: relative;
+
+  @include hover {
+    &::after {
+      transform: scaleX(1);
+      transform-origin: center left;
+    }
+  }
+
+  &::after {
+    background-color: currentColor;
+    bottom: -2px;
+    content: '';
+    display: block;
+    height: 1px;
+    left: 0;
+    position: absolute;
+    transform: scaleX(0);
+    transform-origin: center right;
+    transition: transform 600ms _ease('quint', 'in-out');
+    width: 100%;
+  }
+}
+
+.transition {
+  &__fadeIn {
+    opacity: 0;
+    transition-duration: 1s;
+    transition-property: opacity;
+    transition-timing-function: _ease('quint', 'out');
+  }
+
+  &__fadeInUp {
+    opacity: 0;
+    transform: translate(0, 100px);
+    transition-delay: calc((var(--index, 0) * 100ms));
+    transition-duration: 1s;
+    transition-property: opacity, transform !important;
+    transition-timing-function: _ease('quint', 'in'), _ease('quint', 'out');
+  }
+
+  &--on {
+    &.transition {
+      &__fadeIn {
+        opacity: 1;
+      }
+
+      &__fadeInUp {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
   }
 }

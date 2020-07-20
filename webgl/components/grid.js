@@ -14,6 +14,7 @@ export default class Grid extends THREE.Object3D {
 
     this.geometry = new THREE.PlaneBufferGeometry(1, 1)
     this.uniforms = {
+      uAppear: { value: 0 },
       uColor: { value: new THREE.Color(color) },
       uOffset: { value: new THREE.Vector2() },
       uRatio: {
@@ -24,6 +25,9 @@ export default class Grid extends THREE.Object3D {
       },
       uCursor: {
         value: new THREE.Vector2(0.5, 0.5)
+      },
+      uTime: {
+        value: 0
       }
     }
 
@@ -46,6 +50,10 @@ export default class Grid extends THREE.Object3D {
 
     viewport.events.on('resize', this.onWindowResize.bind(this))
     mouse.events.on('mousemove', this.onMouseMove.bind(this))
+  }
+
+  update(clock) {
+    this.uniforms.uTime.value = clock.time
   }
 
   onMouseMove(e) {

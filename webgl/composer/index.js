@@ -1,3 +1,5 @@
+import Events from 'events'
+
 import {
   EffectComposer,
   EffectPass,
@@ -27,6 +29,8 @@ export default class Composer {
     this.scene = scene
 
     this.enabled = true
+
+    this.events = new Events()
 
     this.init()
   }
@@ -63,6 +67,13 @@ export default class Composer {
       size: 128
     })
 
+    this.fluidSimulation.iterations = 10
+    this.fluidSimulation.densityDissipation = 0.996
+    this.fluidSimulation.velocityDissipation = 0.93
+    this.fluidSimulation.pressureDissipation = 0
+    this.fluidSimulation.curlStrength = 50
+    this.fluidSimulation.radius = 1
+
     this.mouseFlowmapEffect = new MouseFlowmapEffect()
 
     this.bloomEffect = new BloomEffect({
@@ -77,6 +88,7 @@ export default class Composer {
     this.glitchEffect = new GlitchEffect({
       perturbationMap: this.assets.get('perturbation-map')
     })
+    this.glitchEffect.mode = 0
 
     // composer
     this.composer = new EffectComposer(this.renderer)
@@ -91,6 +103,8 @@ export default class Composer {
     this.composer.addPass(this.bloomPass)
     this.composer.addPass(this.glitchPass)
     this.composer.addPass(this.flowmapPass)
+
+    this.events.emit('load')
   }
 
   render(clock) {
