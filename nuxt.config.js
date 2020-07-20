@@ -84,7 +84,6 @@ export default {
     scss: ['@/assets/scss/config.scss', '@/assets/scss/modules/index.scss']
   },
   plugins: [
-    '~/plugins/composition-api',
     { src: '~/plugins/events.js', mode: 'client' },
     { src: '~/plugins/viewport.js', mode: 'client' },
     { src: '~/plugins/scroll.js', mode: 'client' },
