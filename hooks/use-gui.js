@@ -25,6 +25,10 @@ const useGUI = () => {
     gui.postprocessing = gui.addFolder('Post-processing')
   }
 
+  if (process.env.NODE_ENV === 'production') {
+    gui.hide()
+  }
+
   return gui
 }
 

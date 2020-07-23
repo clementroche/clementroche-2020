@@ -1,8 +1,6 @@
 <template>
   <div class="pageIndex">
-    <el-scroller>
-      <block-introduction class="pageIndex__introduction" />
-    </el-scroller>
+    <block-introduction class="pageIndex__introduction" />
   </div>
 </template>
 
@@ -67,23 +65,35 @@ export default {
 
 <style lang="scss">
 .pageIndex {
-  height: calc(var(--vh, 1vh) * 100);
-  // max-height: calc(var(--vh, 1vh) * 100);
-  overflow: hidden;
+  align-items: center;
+  color: #fff;
+  display: flex;
+  position: relative;
+
+  @include media('>m') {
+    height: calc(var(--vh, 1vh) * 100);
+    overflow: hidden;
+  }
 
   &__introduction {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1800px;
-    padding-bottom: 25vh;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 25vh;
     width: 100%;
 
-    @include media('>m') {
-      width: 70%;
+    @include media('<=m') {
+      padding-bottom: 25vh;
+      padding-top: 25vh;
     }
+    //   margin-left: auto;
+    //   margin-right: auto;
+    //   max-width: 1800px;
+    //   padding-bottom: 25vh;
+    //   padding-left: 20px;
+    //   padding-right: 20px;
+    // padding-top: 25vh;
+    //   width: 100%;
+
+    //   @include media('>m') {
+    //     width: 70%;
+    //   }
   }
 }
 </style>

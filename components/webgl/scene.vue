@@ -1,6 +1,6 @@
 <template>
   <div class="shellScene">
-    <webgl-info />
+    <webgl-info v-if="showInfo" />
   </div>
 </template>
 
@@ -9,9 +9,18 @@ import useWebGL from '@/hooks/use-webgl'
 import useGUI from '@/hooks/use-gui'
 
 export default {
+  data() {
+    return {
+      showInfo: false
+    }
+  },
   mounted() {
     const { canvas } = useWebGL()
     this.$el.appendChild(canvas)
+
+    if (process.env.NODE_ENV !== 'production') {
+      this.showInfo = true
+    }
   },
   beforeDestroy() {
     const WebGL = useWebGL()

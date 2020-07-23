@@ -132,3 +132,24 @@ button {
     }
   }
 }
+
+:root {
+  --layout-max-width: 1800px;
+  --layout-gap: 20px;
+  --layout-columns: 4;
+
+  @include media('>m') {
+    --layout-gap: 30px;
+    --layout-columns: 16;
+  }
+}
+
+.e-layoutGrid {
+  column-gap: var(--layout-gap);
+  display: grid;
+  grid-template-columns: repeat(var(--layout-columns), 1fr);
+  margin: 0 auto;
+  max-width: var(--layout-max-width);
+  padding-left: var(--layout-gap);
+  padding-right: var(--layout-gap);
+}

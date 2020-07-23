@@ -72,10 +72,12 @@ class WebGL {
     // this.composer.enabled = false
 
     // stats
-    this.stats = new Stats()
-    document.body.appendChild(this.stats.dom)
-    RAF.add('stats-begin', this.stats.begin, -1000)
-    RAF.add('stats-end', this.stats.end, 1000)
+    if (process.env.NODE_ENV !== 'production') {
+      this.stats = new Stats()
+      document.body.appendChild(this.stats.dom)
+      RAF.add('stats-begin', this.stats.begin, -1000)
+      RAF.add('stats-end', this.stats.end, 1000)
+    }
 
     // raycaster
     const Raycaster = require('@/webgl/raycaster').default
