@@ -131,8 +131,9 @@ export default {
 
 <style lang="scss">
 .e-blockTitle {
-  font-size: 10px;
-  letter-spacing: 0.2rem;
+  font-family: var(--font-spacemono-bold);
+  font-size: 12px;
+  letter-spacing: 0.3rem;
   text-transform: uppercase;
 }
 
@@ -181,6 +182,7 @@ export default {
   }
 
   &__title {
+    font-family: var(--font-spacemono-bold);
     font-size: 40px;
     line-height: 55px;
   }

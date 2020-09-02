@@ -3,7 +3,8 @@
 @include font-faces();
 
 :root {
-  --font-grotesk: '#{nth($font-faces, 1)}', serif;
+  --font-spacemono-regular: '#{nth($font-faces, 1)}', serif;
+  --font-spacemono-bold: '#{nth($font-faces, 2)}', serif;
   @include colors-properties();
   @include responsive-properties();
 }

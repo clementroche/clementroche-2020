@@ -69,15 +69,6 @@ export default {
       }
     ]
   },
-  manifest: {
-    orientation: 'portrait-primary',
-    name: 'nuxt-three',
-    short_name: 'nuxt-three',
-    display: 'standalone',
-    background_color: '#000000',
-    theme_color: '#000000',
-    description: ''
-  },
   loading: false,
   css: ['@/assets/scss/index.scss'],
   styleResources: {
@@ -126,7 +117,6 @@ export default {
     ]
   ],
   modules: [
-    '@nuxtjs/pwa',
     '@nuxtjs/style-resources',
     'nuxt-helmet',
     'nuxt-ssr-cache',

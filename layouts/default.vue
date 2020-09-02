@@ -36,7 +36,7 @@ export default {
 <style lang="scss">
 #__nuxt {
   color: #fff;
-  font-family: var(--font-grotesk);
+  font-family: var(--font-spacemono-regular);
   height: 100%;
   overflow-y: auto;
 }
