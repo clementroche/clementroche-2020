@@ -30,6 +30,7 @@
     "nuxt": "^2.13.3",
     "nuxt-compress": "^1.1.0",
     "nuxt-helmet": "^1.2.3",
+    "nuxt-seo": "^1.5.0",
     "nuxt-ssr-cache": "^1.5.1",
     "postprocessing": "^6.16.0",
     "raw-loader": "^4.0.1",

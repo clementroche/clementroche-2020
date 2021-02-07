@@ -19,40 +19,39 @@ export default {
     htmlAttrs: {
       lang: 'en'
     },
-    title: 'nuxt-three',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'Nuxt.js - Three.js starter'
-      },
-      {
-        hid: `og:title`,
-        property: 'og:title',
-        content: 'nuxt-three'
-      },
-      {
-        hid: `og:description`,
-        property: 'og:description',
-        content: 'Web app starter built on Nuxt.js and Three.js'
-      },
-      {
-        hid: 'og:type',
-        property: 'og:type',
-        content: 'website'
-      },
-      {
-        hid: `og:url`,
-        property: 'og:url',
-        content: 'https://github.com/clementroche/nuxt-three'
-      },
-      {
-        hid: `og:image`,
-        property: 'og:image',
-        content: ''
-      }
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      // {
+      //   hid: 'description',
+      //   name: 'description',
+      //   content: 'Nuxt.js - Three.js starter'
+      // },
+      // {
+      //   hid: `og:title`,
+      //   property: 'og:title',
+      //   content: 'nuxt-three'
+      // },
+      // {
+      //   hid: `og:description`,
+      //   property: 'og:description',
+      //   content: 'Web app starter built on Nuxt.js and Three.js'
+      // },
+      // {
+      //   hid: 'og:type',
+      //   property: 'og:type',
+      //   content: 'website'
+      // },
+      // {
+      //   hid: `og:url`,
+      //   property: 'og:url',
+      //   content: 'https://github.com/clementroche/nuxt-three'
+      // },
+      // {
+      //   hid: `og:image`,
+      //   property: 'og:image',
+      //   content: ''
+      // }
     ],
     link: [
       {
@@ -120,8 +119,27 @@ export default {
     '@nuxtjs/style-resources',
     'nuxt-helmet',
     'nuxt-ssr-cache',
-    'nuxt-compress'
+    'nuxt-compress',
+    'nuxt-seo'
   ],
+  seo: {
+    // Module options
+    url: 'https://clementroche.dev',
+    title: 'Clément Roche',
+    description: 'Clément Roche - Web developer',
+    og: {
+      title: 'Clément Roche',
+      url: 'https://clementroche.dev',
+      description: 'Clément Roche - Web developer',
+      name: 'Clément Roche'
+    },
+    twitter: {
+      creatot: '@clementroche_',
+      title: 'Clément Roche',
+      site: 'https://clementroche.dev',
+      description: 'Clément Roche - Web developer'
+    }
+  },
   'nuxt-compress': {
     gzip: {
       cache: true
